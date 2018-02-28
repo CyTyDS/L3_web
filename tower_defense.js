@@ -1,9 +1,11 @@
-class Tower() {
+function Tower() {
 }
 
-class Cannon() {
+function Cannon() {
 }
 
-class Monster() {
+function Monster() {
 }
 
+function Player(){
+}
