@@ -1,0 +1,15 @@
+canvas {
+    border: solid 1px;
+}
+
+#canvas1 {
+    background: url("1.jpg");
+}
+
+#canvas2 {
+    background: url("2.jpg");
+}
+
+div:not(#d) {
+    border: solid 1px;
+}

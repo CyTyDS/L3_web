@@ -1,13 +1,60 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title> Exemple JavaScript</title>
-        <meta charset ="utf-8" />
-    </head>
+  <head>
+    <title>TowerDefenseJS DS/TF</title>
+    <meta charset ="utf-8" />
+    <link rel="stylesheet" href="tower_defense.css" />
+    <script src="jquery-3.3.1.js"></script>
+    <script src="tower_defense.js"></script>
+    <script type="text/javascript">
+        /*
+        function Ennemi(type) {
+            this.x;
+            this.y;
+            this.size = 20; //px
+            this.type = type;
+            this.pdv = (this.type == GAME_T1 ? 20 : 60);
+            this.vitesse = (this.type == GAME_T1 ? 1 : 3);
+            this.gold = (this.type == GAME_T1 ? 25 : 50);
 
-    <body>
-        <!-- Modele des Table ? -->
-        <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script src="tower_defense.js" ></script>
-    </body>
+            this.move = function() {
+
+            };
+            this.grow = function() {
+                this.size += 1;
+            };
+        }
+        var x = new Ennemi(1);
+        var iv = setInterval(function() {
+            x.grow();
+        }, 1000);
+
+        /*
+        var canvas = document.querySelector('canvas');
+        var context = canvas.getContext('2d');
+
+        context.fillStyle = "blue";
+        context.fillRect(0,0,20,20);
+        context.fillStyle = "green";
+        context.fillRect(0, 20, 10, 10);
+        */
+
+        //*/
+    </script>
+  </head>
+
+  <body>
+    <div id="d">
+      <input type="button" value="Carte 1" onclick="loadMap(1);" />
+      <input type="button" value="Carte 2" onclick="loadMap(2);" />
+    </div>
+  </body>
 </html>
+
+<!--
+<canvas id="canvas" width="" height="" ></canvas>
+<div class="tower" ></div>
+<div class="tower" ></div>
+<div class="tower" ></div>
+<div class="player" ></div>
+-->
