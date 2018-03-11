@@ -1,2 +1,4 @@
-Continuer Systeme de jeu & Bases de jeu
-Fichier 2 move
+Terminer Systeme de jeu
+Interactions placer canons
+Interactions Canons et Ennemis
+Travail sur les tableaux enemies et canon

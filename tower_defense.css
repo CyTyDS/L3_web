@@ -1,5 +1,6 @@
 canvas {
     border: solid 1px;
+    float: left;
 }
 
 #canvas1 {
@@ -12,4 +13,8 @@ canvas {
 
 div:not(#d) {
     border: solid 1px;
+}
+
+.tower, .player {
+    float: left;
 }
