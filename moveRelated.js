@@ -76,8 +76,8 @@ var obstacleY = game_type === 1 ? pY1 : pY2;
         }
 
         //Condition bord de l'écran
-        if (!(0+SIZE <= x && x <= 800-SIZE
-            && 0+SIZE <= y && y <= 600-SIZE)) {
+        if (!(SCREEN_BORDER_X_MIN+SIZE <= x && x <= SCREEN_BORDER_X_MAX-SIZE
+        && SCREEN_BORDER_Y_MIN+SIZE <= y && y <= SCREEN_BORDER_Y_MAX-SIZE)) {
             return false;
         }
 
@@ -85,14 +85,18 @@ var obstacleY = game_type === 1 ? pY1 : pY2;
         var len = obstacleX.length;
         for (var o = 0; o < len-1; o++) {
             if (obstacleX[o] === obstacleX[o+1]) {
-                if ((Math.max(obstacleX[o]-SIZE*1.5, 0) <= x && x <= Math.min(obstacleX[o]+SIZE*1.5, 800))
-                    && (Math.min(obstacleY[o], obstacleY[o+1])-SIZE <= y && y <= Math.max(obstacleY[o], obstacleY[o+1])+SIZE)) {
+                if ((Math.max(obstacleX[o]-SIZE*1.5, 0) <= x
+                && x <= Math.min(obstacleX[o]+SIZE*1.5, 800))
+                && (Math.min(obstacleY[o], obstacleY[o+1])-SIZE <= y
+                && y <= Math.max(obstacleY[o], obstacleY[o+1])+SIZE)) {
                     return false;
                 }
             }
             if (obstacleY[o] === obstacleY[o+1]) {
-                if ((Math.max(obstacleY[o]-SIZE*1.5, 0) <= y && y <= Math.min(obstacleY[o]+SIZE*1.5, 600))
-                        && (Math.min(obstacleX[o], obstacleX[o+1])-SIZE <= x && x <= Math.max(obstacleX[o], obstacleX[o+1])+SIZE)) {
+                if ((Math.max(obstacleY[o]-SIZE*1.5, 0) <= y
+                && y <= Math.min(obstacleY[o]+SIZE*1.5, 600))
+                && (Math.min(obstacleX[o], obstacleX[o+1])-SIZE <= x
+                && x <= Math.max(obstacleX[o], obstacleX[o+1])+SIZE)) {
                     return false;
                 }
             }
@@ -102,8 +106,10 @@ var obstacleY = game_type === 1 ? pY1 : pY2;
         //DEBUT condition canon
         var canBool = true;
         canon.forEach(function (value) {
-            if (((value.x - value.size*2 <= x) && (x <= value.x + value.size*2))
-                && ((value.y - value.size*2 <= y) && (y <= value.y + value.size*2))) {
+            if (((value.x - value.size*2 <= x)
+            && (x <= value.x + value.size*2))
+            && ((value.y - value.size*2 <= y)
+            && (y <= value.y + value.size*2))) {
                 canBool = false;
             }
         });

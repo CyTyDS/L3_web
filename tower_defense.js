@@ -1,7 +1,31 @@
 SIZE = 20;
 SIZE_ROUTE = SIZE / 2;
+
+SCREEN_BORDER_X_MIN = 0;
+SCREEN_BORDER_X_MAX = 800;
+SCREEN_BORDER_Y_MIN = 0;
+SCREEN_BORDER_Y_MAX = 600;
+
+CANON_POWER_1 = 10;
+CANON_POWER_2 = 30;
+CANON_FR_1 = 0.5;
+CANON_FR_2 = 1;
 CANON_COST_1 = 50;
 CANON_COST_2 = 75;
+CANON_RANGE_1 = 100;
+CANON_RANGE_2 = 150;
+
+ENEMY_HP_1 = 20;
+ENEMY_HP_2 = 60;
+ENEMY_SPEED_1 = 2;
+ENEMY_SPEED_2 = 3;
+ENEMY_GOLD_1 = 5;
+ENEMY_GOLD_2 = 7;
+
+PLAYER_GOLD = 200;
+PLAYER_KILLED = 0;
+PLAYER_MISSED = 20;
+PLAYER_SC = 1;
 
 var canvas;
 var context;
@@ -96,13 +120,14 @@ var enemies = [];
         })();
     }
 
+
     function Canon(type, posx, posy) {
         this.type = type;
         this.size = SIZE /2;
-        this.power = (this.type === 1 ? 10 : 30);
-        this.firerate = (this.type === 1 ? 0.5 : 1);
+        this.power = (this.type === 1 ? CANON_POWER_1 : CANON_POWER_2);
+        this.firerate = (this.type === 1 ? CANON_FR_1 : CANON_FR_2);
         this.prix = (this.type === 1 ? CANON_COST_1 : CANON_COST_2);
-        this.portee = (this.type === 1 ? 100 : 200);
+        this.portee = (this.type === 1 ? CANON_RANGE_1 : CANON_RANGE_2);
         this.x = posx + this.size;
         this.y = posy + this.size;
         this.cible = undefined;
@@ -181,10 +206,10 @@ var enemies = [];
         this.obstacle = 0; //x points, donc allant de 0 à len-1;
         this.size = SIZE / 2; //px
         this.type = type;
-        this.totalpdv = (this.type === 1 ? 20 : 60);
-        this.pdv = (this.type === 1 ? 20 : 60);
-        this.vitesse = (this.type === 1 ? 2 : 3);
-        this.gold = (this.type === 1 ? 25 : 50);
+        this.totalpdv = (this.type === 1 ? ENEMY_HP_1 : ENEMY_HP_2);
+        this.pdv = this.totalpdv;
+        this.vitesse = (this.type === 1 ? ENEMY_SPEED_1 : ENEMY_SPEED_2);
+        this.gold = (this.type === 1 ? ENEMY_GOLD_1 : ENEMY_GOLD_2);
 
         this.isDead = function () {
             return (this.pdv <= 0);
@@ -207,13 +232,13 @@ var enemies = [];
 
 
     function Joueur(){
-        this.gold = 500;
-        this.killed = 0;
-        this.missed = 20;
-        this.selectedC = 1;
+        this.gold = PLAYER_GOLD;
+        this.killed = PLAYER_KILLED;
+        this.missed = PLAYER_MISSED;
+        this.selectedC = PLAYER_SC;
 
         this.hasLost = function() {
-            return this.missed === 0;
+            return this.missed <= 0;
         };
 
         this.selectCanon = function(type) {
