@@ -76,8 +76,8 @@ var obstacleY = game_type === 1 ? pY1 : pY2;
         }
 
         //Condition bord de l'écran
-        if (!(0+SIZE_ROUTE <= x && x <= 800-SIZE_ROUTE
-            && 0+SIZE_ROUTE <= y && y <= 600-SIZE_ROUTE)) {
+        if (!(0+SIZE <= x && x <= 800-SIZE
+            && 0+SIZE <= y && y <= 600-SIZE)) {
             return false;
         }
 

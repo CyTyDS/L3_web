@@ -1,5 +1,7 @@
 SIZE = 20;
 SIZE_ROUTE = SIZE / 2;
+CANON_COST_1 = 50;
+CANON_COST_2 = 75;
 
 var canvas;
 var context;
@@ -15,12 +17,14 @@ var enemies = [];
         game_type = x;
         document.getElementById("d").innerHTML =
             "<canvas id='canvas" + x + "' width='800' height='600'></canvas>" +
-            "<div id='tower1' onclick='player.selectCanon(1)' >Canon 1<br/>Rapide<br/>Faible degats</div><br />" +
-            "<div id='tower2' onclick='player.selectCanon(2)' >Canon 2<br/>Lent<br/>Gros degats</div><br />" +
+            "<div id='tower1' onclick='player.selectCanon(1)' >Canon 1<br/>Rapide<br/>Faible degats<br/>Cout : " + CANON_COST_1 +
+            "</div><br />" +
+            "<div id='tower2' onclick='player.selectCanon(2)' >Canon 2<br/>Lent<br/>Gros degats<br/>Cout : " + CANON_COST_2 +
+            "</div><br />" +
             "<div id='player' >" +
             "Or : <span id='gold'>500</span><br/>" +
             "Ennemis tués : <span id='killed'>0</span><br/>" +
-            "Ennemis ratés : <span id='missed'>0</span></div><br />";
+            "Ennemis ratés : <img src='heart.png' alt='Heart' height='30' width='30' >x<span id='missed'>"+ player.missed +"</span></div><br />";
 
         initMap(x);
         canvas = document.querySelector('canvas');
@@ -39,7 +43,7 @@ var enemies = [];
         });
 
         (function play() {
-            if (1) {
+            if (!player.hasLost()) {
                 context.save();
                 context.clearRect(0 , 0, 800, 600);
 
@@ -75,7 +79,7 @@ var enemies = [];
                             document.getElementById('killed').innerHTML = "" + player.killed;
                         }
                         if (value.hasWon()) {
-                            ++player.missed;
+                            --player.missed;
                             document.getElementById('missed').innerHTML = "" + player.missed;
                         }
                         array.splice(index, 1);
@@ -97,7 +101,7 @@ var enemies = [];
         this.size = SIZE /2;
         this.power = (this.type === 1 ? 10 : 30);
         this.firerate = (this.type === 1 ? 0.5 : 1);
-        this.prix = (this.type === 1 ? 50 : 75);
+        this.prix = (this.type === 1 ? CANON_COST_1 : CANON_COST_2);
         this.portee = (this.type === 1 ? 100 : 200);
         this.x = posx + this.size;
         this.y = posy + this.size;
@@ -174,7 +178,7 @@ var enemies = [];
     function Ennemi(type) {
         this.x = undefined;
         this.y = undefined;
-        this.obstacle = 0; //x points, donc allant de 0 à x-1;
+        this.obstacle = 0; //x points, donc allant de 0 à len-1;
         this.size = SIZE / 2; //px
         this.type = type;
         this.totalpdv = (this.type === 1 ? 20 : 60);
@@ -186,7 +190,7 @@ var enemies = [];
             return (this.pdv <= 0);
         };
         this.hasWon = function () {
-            return (this.obstacle === obstacleX.length);
+            return (this.obstacle === obstacleX.length - 1);
         };
         this.takeDMG = function (power) {
             this.pdv = Math.max(this.pdv - power, 0);
@@ -205,8 +209,12 @@ var enemies = [];
     function Joueur(){
         this.gold = 500;
         this.killed = 0;
-        this.missed = 0;
+        this.missed = 20;
         this.selectedC = 1;
+
+        this.hasLost = function() {
+            return this.missed === 0;
+        };
 
         this.selectCanon = function(type) {
             this.selectedC = type;
