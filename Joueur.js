@@ -3,21 +3,34 @@ PLAYER_KILLED = 0;
 PLAYER_MISSED = 20;
 PLAYER_SC = 1;
 
+    /*
+     * Représente le joueur dans le jeu, son or, ses ennemis tués et ratés.
+     */
     function Joueur(){
         this.gold = PLAYER_GOLD;
         this.killed = PLAYER_KILLED;
         this.missed = PLAYER_MISSED;
         this.selectedC = PLAYER_SC;
 
+        /*
+         * Indique si le joueur a perdu.
+         */
         this.hasLost = function() {
             return this.missed <= 0;
         };
 
+        /*
+         * Change le type de canon selectionné.
+         */
         this.selectCanon = function(type) {
             this.selectedC = type;
         };
     }
 
+    /*
+     * Indique si le positionnement (x,y) est conforme pour placer un canon.
+     * Différentes conditions sont respectées.
+     */
     Joueur.prototype.okCanon = function (x, y, price) {
         //Condition prix
         if (this.gold < price) {
@@ -69,7 +82,10 @@ PLAYER_SC = 1;
         return true;
     };
 
-
+    /*
+     * La fonction qui fait poser un canon en position (x,y), si les conditions
+     * sont respectées.
+     */
     Joueur.prototype.putCanon = function (x, y) {
         var c = new Canon(this.selectedC, x, y);
         if (this.okCanon(c.x, c.y, c.prix)) {

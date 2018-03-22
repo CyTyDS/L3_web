@@ -1,3 +1,4 @@
+//Declarations variables globales
 SIZE = 20;
 SIZE_ROUTE = SIZE / 2;
 
@@ -16,8 +17,15 @@ var enemies = [];
 var spawn = 1;
 var lvl = 1;
 
-//Array splice -> modifier elmt ; indexOf -> pos elmt
-
+/*
+ * loadMap(x) est la fonction principale du programme,
+ * qui crée le menu de jeu. Elle change le contenu de
+ * la page afin de mettre en place le canvas et le reste nécessaire au jeu.
+ * Elle initie la map en fonction du bouton appuyé sur la page d'acceuil, charge
+ * les variables globales utilisées tous le long de la partie et ajoute des
+ * EventsListeners au canvas.
+ * Ensuite elle lance la partie.
+ */
     function loadMap(x) {
         game_type = x;
         document.getElementById("d").innerHTML =
@@ -47,12 +55,16 @@ var lvl = 1;
             player.putCanon(mousePos.x - SIZE/2, mousePos.y - SIZE/2);
         });
 
+        /*
+         * play() est la fonction qui gère le jeu. A chaque frame,
+         * le jeu se dessine, puis execute un "mouvement".
+         */
         (function play() {
             if (!player.hasLost()) {
                 context.save();
                 context.clearRect(0 , 0, 800, 600);
 
-                //fonction pour draw le cercle de range
+                //fonction pour draw le cercle de range (autour de la souris)
                 (function () {
                     if (!mousePos) {
                         return ;
@@ -70,9 +82,15 @@ var lvl = 1;
                     context.globalAlpha = 1;
                 })();
 
+                // dessine tous les canons
                 canon.forEach(function (value) {
                     value.draw();
                 });
+
+                /*
+                 * dessine tous les ennemis, les fait bouger et gère leur
+                 * mort/victoire
+                 */
                 enemies.forEach(function (value, index, array) {
                     value.draw();
                     value.move();
@@ -91,13 +109,16 @@ var lvl = 1;
                         array.splice(index, 1);
                     }
                 });
-
                 context.restore();
                 window.requestAnimationFrame(function () {
                     play();
                 });
+            } else {
+                context.font = "100px sans-serif";
+                context.fillStyle = "black";
+                context.fillRect(0,0,800,600);
+                context.fillStyle = "#fff";
+                context.fillText("Fin !", SCREEN_BORDER_X_MAX/2, SCREEN_BORDER_Y_MAX/2);
             }
-
-
         })();
     }
